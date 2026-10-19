@@ -1,0 +1,12 @@
+# API with Redis as the data store:   docker compose up --build
+# For SQLite instead, remove the redis service and the two MAINTDESK_* lines below.
+services:
+  redis:
+    image: redis:7
+  api:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      MAINTDESK_BACKEND: redis
+      MAINTDESK_REDIS_URL: redis://redis:6379/0
+    depends_on: [redis]
